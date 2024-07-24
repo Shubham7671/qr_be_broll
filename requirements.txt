@@ -1,0 +1,10 @@
+boto3
+python-dotenv
+flask
+flask-cors
+moviepy
+openai==0.28.0
+pymongo
+requests
+termcolor
+functions-framework==3.*

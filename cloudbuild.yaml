@@ -1,0 +1,42 @@
+steps:
+  - id: "Build Docker Image"
+    name: "gcr.io/cloud-builders/docker:latest"
+    # dir: '/'
+    # us-central1-docker.pkg.dev/qr-yt-419711/qr-be-api
+    args:
+      [
+        "build",
+        "-t",
+        "us-central1-docker.pkg.dev/qr-yt-419711/qr-be-ai-broll/qr-be-ai-broll",
+        ".",
+      ]
+
+  - id: "Push Docker Image To Artifact Registry"
+    name: "gcr.io/cloud-builders/docker:latest"
+    args:
+      [
+        "push",
+        "--all-tags",
+        "us-central1-docker.pkg.dev/qr-yt-419711/qr-be-ai-broll/qr-be-ai-broll",
+      ]
+
+# - id: "Deploy Cloud Run Service"
+#   name: 'gcr.io/cloud-builders/gcloud:latest'
+#   args: [
+#     'run', 'deploy', 'qr-be-api',
+#     '--service-account' ,'sa-customers-svc@qr-yt-419711.iam.gserviceaccount.com',
+#     '--allow-unauthenticated',
+#     '--memory', '256Mi',
+#     '--platform', 'managed',
+#     '--image', 'us-central1-docker.pkg.dev/qr-yt-419711/qr-be-ai-broll/qr-be-ai-broll:latest',
+#     '--timeout', '30',
+#     '--min-instances', '0',
+#     '--max-instances', '1',
+#     '--ingress', 'all',
+#     '--region', 'us-central1',
+#     ]
+
+timeout: 600s
+options:
+  logging: CLOUD_LOGGING_ONLY
+  dynamic_substitutions: true
